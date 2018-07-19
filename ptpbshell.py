@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-import requests, uuid
+import requests, uuid, os
 
 class Vars(object):
 	pass
