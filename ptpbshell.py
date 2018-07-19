@@ -12,7 +12,7 @@ def recv():
 	return requests.get(vars.url).content
 
 def build_payload():
-	return vars.url + open("./template.py","r").read()
+	return "url = "+vars.url+"\n\n" + open("./template.py","r").read()
 
 def server_loop():
 	old = recv()
